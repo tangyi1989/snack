@@ -22,11 +22,12 @@ class SnackException(Exception):
 
         super(SnackException, self).__init__(message)
 
-class NotLoggedInException(SnackException):
+class NotLoggedInError(SnackException):
     message = _("Not logged in yet.")
 
 class APIRequestError(SnackException):
-    message = _("Error happens when request API message : %(message)s details : %(details)s")
+    message = _("Error happens when request API message :"
+                " %(message)s details : %(details)s")
 
 def from_response(response, body):
     if body:

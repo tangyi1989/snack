@@ -5,9 +5,7 @@ from snack.handler.base import require_login
 
 class Index(base.BaseHandler):
     
-    @require_login
     @utils.debug
+    @require_login
     def get(self):
-        client = self.session['user']['client']
-        print client.public_urls
-        self.write("")
+        self.render('common/index.html')

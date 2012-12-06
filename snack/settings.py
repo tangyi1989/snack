@@ -1,4 +1,7 @@
 
+DEBUG = True
+HTTP_LOG_DEBUG = False
+
 KEYSTONE_API_CONF = {
         "protocol" : "http",
         "host" : "192.168.2.228",

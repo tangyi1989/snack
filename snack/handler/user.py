@@ -5,11 +5,9 @@ from snack.handler import base
 from snack.handler.base import require_login
 
 class Auth(base.BaseHandler):
-    
     def get(self):
-        self.render("login.html")
+        self.render("common/login.html")
     
-    @utils.debug
     def post(self):
         username = self.get_argument('username', None)
         password = self.get_argument('password', None)
@@ -20,7 +18,8 @@ class Auth(base.BaseHandler):
         self.redirect('/')
         
 class Logout(base.BaseHandler):
-    
+    @utils.debug
     def get(self):
         del self.session['user']
+        self.session.save()
         self.redirect('/auth')

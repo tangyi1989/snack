@@ -11,6 +11,7 @@ import json
 import httplib2
 import logging
 
+from snack import settings
 from snack import exception
 
 #Just print log now
@@ -22,7 +23,7 @@ class Httplib2Client(httplib2.Http):
     
     def __init__(self,*args, **kargs):
         super(Httplib2Client, self).__init__(*args, **kargs)
-        self.http_log_debug = False
+        self.http_log_debug = settings.HTTP_LOG_DEBUG
     
     def http_log_resp(self, resp, body):
         if not self.http_log_debug:

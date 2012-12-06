@@ -1,15 +1,22 @@
 
+from snack import utils
 from snack import api
 from snack import settings
 from snack import exception
 
 def get_public_urls(catalogs):
     """
-    Assume we just have only one region here!
+    Assume we just have only one region here and all server in a single server.
+    Cause NAT reason, we replace local address for debug.
+    It's just debug environment.
     """
-    return dict((catalog['name'], catalog['endpoints'][0]['publicURL']) \
-                for catalog in catalogs)
+    public_urls = dict((catalog['name'], catalog['endpoints'][0]['publicURL']) \
+                       for catalog in catalogs)
+    for k in public_urls.iterkeys():
+        public_urls[k] = public_urls[k].replace('127.0.0.1', settings.KEYSTONE_API_CONF['host'])
+        public_urls[k] = public_urls[k].replace('localhost', settings.KEYSTONE_API_CONF['host'])
         
+    return public_urls
 
 class SnackClient():
     """
@@ -24,10 +31,10 @@ class SnackClient():
         self.password = password
         self.keystone_url = keystone_url
         self.management_url = management_url
-        self.public_urls = None
         self.tenants = None
         self.current_tenant = None
         self.service_catalog = None
+        self.current_public_urls = None
     
     @classmethod
     def authenticate(cls, username, password):
@@ -53,7 +60,11 @@ class SnackClient():
         #Get service_catalog
         service_catalog = api.keystone.get_service_catalog(client)
         client.service_catalog = service_catalog
-        client.public_urls = get_public_urls(service_catalog)
+        client.current_public_urls = get_public_urls(service_catalog)
         
         return client
+    
+    def get_image_list(self):
+        image_list = api.glance.get_image_list(self)
+        return image_list
     
