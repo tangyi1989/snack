@@ -68,3 +68,18 @@ class SnackClient():
         image_list = api.glance.get_image_list(self)
         return image_list
     
+    def get_instance_list(self):
+        instance_list = api.nova.get_instance_list(self)
+        return instance_list
+    
+    def get_flavor_list(self):
+        instance_list = api.nova.get_flavor_list(self)
+        return instance_list
+    
+    def create_instance(self, name, image_id, flavor_id):
+        result = api.nova.create_instance(self, name, image_id, flavor_id)
+        return result
+    
+    def delete_instance(self, instance_id):
+        result = api.nova.delete_instance(self, instance_id)
+        return result

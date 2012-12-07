@@ -1,0 +1,31 @@
+{% extends "../base.html" %}
+
+{% block content %}
+	<h2>Instance List</h2>
+	<p>
+		{% if len(instances) == 0 %}
+			<h3> You have no instances now</h3>
+		{% else %}
+			<table>
+				<tr>
+					<td>Name</td>
+					<td>Status</td>
+					<td>Task_state</td>
+					<td>Actinons</td>
+				</tr>
+			{% for instance in instances %}
+				<tr>
+					<td>{{instance['name']}}</td>
+					<td>{{instance['status']}}</td>
+					<td>{{instance['OS-EXT-STS:task_state']}}</td>
+					<td>
+						<a href="/instance/action?action=delete&instance_id={{instance['id']}}">Delete</a>
+						<a href="#">VNC console</a>
+					</td>
+				</tr>
+			{% end %}
+			</table>
+		{% end %}
+		<a href="/instance/create"><h2>Create Instance</h2></a>
+	</p>
+{% end %}

@@ -16,9 +16,7 @@ def authenticate(keystone_url, username, password, tenant_name=None):
     return HTTPClient().request(auth_url, method="POST", body=body)[1]
 
 def get_service_catalog(client):
-    """
-    Get current tenants' endpoints, It's ugly here.
-    """
+    """ Get current tenants' endpoints, It's ugly here """
     access = authenticate(client.keystone_url, client.username, client.password, 
                           client.current_tenant['name'])['access']
     

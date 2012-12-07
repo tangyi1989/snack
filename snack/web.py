@@ -19,7 +19,9 @@ class Application(web.Application):
         handlers = [(r"/", handler.common.Index),
                     (r"/auth", handler.user.Auth),
                     (r"/logout", handler.user.Logout),
-                    (r"/image/list", handler.image.List),]
+                    (r"/instance/list", handler.instance.List),
+                    (r"/instance/create", handler.instance.Create),
+                    (r"/instance/action", handler.instance.Action),]
         
         redis_connection = redis.Redis(host='localhost', port=6379, db=0)
         self.session_store = RedisSessionStore(redis_connection)
@@ -27,9 +29,12 @@ class Application(web.Application):
         application_settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
-            permanent_session_lifetime = 1, #These 3 parameter is just for session
+            
+            #These three parameters are used for session settings.
+            permanent_session_lifetime = 1,
             redis_server = True,
             cookie_secret = 'You would never know this.',
+            
             debug=settings.DEBUG)
         
         web.Application.__init__(self, handlers, **application_settings)

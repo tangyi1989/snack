@@ -22,8 +22,11 @@ class SnackException(Exception):
 
         super(SnackException, self).__init__(message)
 
+class InvalidRequestArgument(SnackException):
+    message = _("Invalid request argument.")
+
 class NotLoggedInError(SnackException):
-    message = _("Not logged in yet.")
+    message = _("Not logged in yet")
 
 class APIRequestError(SnackException):
     message = _("Error happens when request API message :"

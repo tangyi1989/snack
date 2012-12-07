@@ -1,0 +1,24 @@
+{% extends "../base.html" %}
+
+{% block content %}
+	<form method="post" action="/instance/create">
+		<h2>Create a instance</h2>
+		<h3>Name of your instance:</h3>
+		<input type="text" name="name" />
+		<h3>Image you want:</h3>
+		<select name="image">
+		{% for image in images %}
+			<option value="{{image['id']}}">{{image['name']}}</option>
+		{% end %}
+		</select>
+		<h3>Flavor you want:</h3>
+		<select name="flavor">
+		{% for flavor in flavors %}
+			<option value="{{flavor['id']}}">{{flavor['name']}} (CPUs:{{flavor['vcpus']}} RAM:{{flavor['ram']}}MB 
+				Local Disk:{{flavor['disk']}} GB)</option>
+		{% end %}
+		</select>
+		<br><br>
+		<input type="submit" value="Create instance now" />
+	</form>
+{% end %}

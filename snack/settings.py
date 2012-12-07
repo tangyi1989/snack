@@ -1,6 +1,6 @@
 
 DEBUG = True
-HTTP_LOG_DEBUG = False
+HTTP_LOG_DEBUG = True
 
 KEYSTONE_API_CONF = {
         "protocol" : "http",

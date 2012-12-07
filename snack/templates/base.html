@@ -7,6 +7,17 @@
 		<div id="header">
 			{% block header %}{% end %}
 		</div>
+		<div id="status">
+			<h3>User</h3>{{ handler.session['user']['username'] }}
+			<h3>Current tenant</h3>{{ handler.session['user']['client'].current_tenant['name'] }}
+		</div>
+		<div id="menu">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="/instance/list">Instance list</a></li>
+				<li><a href="/logout">Logout</a></li>
+			</ul>
+		</div>
 		<div id="content">
   			{% block content %}{% end %}
 		</div>
