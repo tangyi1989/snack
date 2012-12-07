@@ -25,11 +25,11 @@ class Create(base.BaseHandler):
     @utils.debug
     def post(self):
         name = self.get_argument("name", None)
-        image_ref = self.get_argument("image", None)
-        falvor_ref = self.get_argument("flavor", None)
+        image_id = self.get_argument("image", None)
+        flavor_id = self.get_argument("flavor", None)
         
         client = self.session['user']['client']
-        result = client.create_instance(name, image_ref, falvor_ref)
+        result = client.create_instance(name, image_id, flavor_id)
         prompt = _("Creating instance, please wait ..." )
         
         self.prompt_and_redirect(prompt, "/instance/list")
