@@ -7,7 +7,7 @@ from snack.session import RedisSession, Session
 def require_login(request_method):
     """ A decorator to check the if the user is logged in. """
     def wrapper(self, *args, **kwargs):
-        if not self.is_logged_in():
+        if not 'user' in self.session:
             raise exception.NotLoggedInError()
         else:
             return request_method(self, *args, **kwargs)
@@ -49,6 +49,7 @@ class BaseHandler(RequestHandler):
             self.finish()
     
     def handle_snack_exception(self, e):
+        
         #Specify exception that we want handle
         exception_handlers = {exception.NotLoggedInError : self.handle_not_logged_in}
         if exception_handlers.has_key(type(e)):
@@ -70,6 +71,7 @@ class BaseHandler(RequestHandler):
         self.render("common/prompt.html", prompt=prompt_cotent, 
                     redirect=redirect_url)
     
+    @property
     def is_logged_in(self):
         return 'user' in self.session
     

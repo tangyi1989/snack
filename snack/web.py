@@ -21,7 +21,9 @@ class Application(web.Application):
                     (r"/logout", handler.user.Logout),
                     (r"/instance/list", handler.instance.List),
                     (r"/instance/create", handler.instance.Create),
-                    (r"/instance/action", handler.instance.Action),]
+                    (r"/instance/action", handler.instance.Action),
+                    #Handle all ajax request
+                    (r"/~ajax/(.*)", handler.ajax.AjaxHandler),]
         
         redis_connection = redis.Redis(host='localhost', port=6379, db=0)
         self.session_store = RedisSessionStore(redis_connection)

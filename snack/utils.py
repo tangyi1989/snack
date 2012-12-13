@@ -1,4 +1,5 @@
 
+import json
 import inspect
 import itertools
 import datetime
@@ -94,6 +95,12 @@ def to_primitive(value, convert_instances=False, level=0):
         # Class objects are tricky since they may define something like
         # __iter__ defined but it isn't callable as list().
         return unicode(value)
+
+def json_dumps(value, default=to_primitive, **kwargs):
+    return json.dumps(value, default=default, **kwargs)
+
+def json_loads(s):
+    return json.loads(s)
 
 def debug(func):
     """

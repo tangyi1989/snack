@@ -32,6 +32,11 @@ class APIRequestError(SnackException):
     message = _("Error happens when request API message :"
                 " %(message)s details : %(details)s")
 
+class AjaxRequestError(SnackException):
+    message = _("Ajax Request error : %(reason)s")
+
+
+
 def from_response(response, body):
     if body:
         message = "n/a"
