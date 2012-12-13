@@ -11,5 +11,5 @@ setuptools.setup(
     version="2012.12",
     author="Alex, Tang",
     description="A demo dashboard use tornado.",
-    packages=["snack"],
+    packages=setuptools.find_packages(exclude=['bin', 'tests'])
 )
