@@ -1,16 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>Snack-Esage Web</title>
+		<title>Snack-eSage Web</title>
+		<link href="/static/css/bootstrap.css" rel="stylesheet"/>
+		<link href="/static/css/login.css" rel="stylesheet"/>
 	</head>
 	<body>
-		<div id="content">
-			<form action="/auth" method="post">
-				<h2>LOGIN</h2>
-  				<p>USERNAME:<input type="text" name="username" /></p>
-  				<p>PASSWORD:<input type="password" name="password" /></p>
-  				<p><input value="Login" type="submit" /></p>
-  			</form>
+		<div class="container">
+		  <form class="form-signin" action="/auth" method="POST">
+			<h2 class="form-signin-heading">Login in</h2>
+			<input type="text" class="input-block-level" placeholder="Username" name="username">
+			<input type="password" class="input-block-level" placeholder="Password" name="password">
+			<button class="btn btn-large btn-primary" type="submit">Submit</button>
+		  </form>
 		</div>
+		<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 	</body>
 </html>

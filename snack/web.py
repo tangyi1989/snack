@@ -12,7 +12,7 @@ from snack import settings
 from snack.session import RedisSessionStore
 from snack import greentornado
 
-define("port", default=80, help="run on the given port", type=int)
+define("port", default=8888, help="run on the given port", type=int)
 
 class Application(web.Application):
     def __init__(self):
