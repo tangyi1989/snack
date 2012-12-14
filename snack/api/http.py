@@ -8,9 +8,12 @@ but for simplify the demo, we use blocking request now.
 
 import sys
 import json
-import httplib2
 import logging
 
+import eventlet
+httplib2 = eventlet.import_patched('httplib2')
+
+from snack import greentornado
 from snack import settings
 from snack import exception
 

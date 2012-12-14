@@ -10,6 +10,7 @@ from tornado.options import define, options
 from snack import handler
 from snack import settings
 from snack.session import RedisSessionStore
+from snack import greentornado
 
 define("port", default=80, help="run on the given port", type=int)
 
@@ -24,6 +25,11 @@ class Application(web.Application):
                     (r"/instance/action", handler.instance.Action),
                     #Handle all ajax request
                     (r"/~ajax/(.*)", handler.ajax.AjaxHandler),]
+        
+        #Greenify all handlers, so the request would be nonblock.
+        for app_handler in handlers:
+            hanlder_cls = app_handler[1]
+            greentornado.greenify(hanlder_cls)
         
         redis_connection = redis.Redis(host='localhost', port=6379, db=0)
         self.session_store = RedisSessionStore(redis_connection)
@@ -45,7 +51,8 @@ def main():
     tornado.options.parse_command_line()
     http_server = httpserver.HTTPServer(Application())
     http_server.listen(options.port)
-    ioloop.IOLoop.instance().start()
+    #ioloop.IOLoop.instance().start()
+    greentornado.Hub.start()
 
 if __name__ == "__main__":
     main()
