@@ -1,5 +1,6 @@
 
 from snack import exception
+from snack import settings
 
 from tornado.web import RequestHandler
 from snack.session import RedisSession, Session
@@ -40,13 +41,16 @@ class BaseHandler(RequestHandler):
     
     def _handle_request_exception(self, e):
         """ Handle uncaught exception in base class. """
+        
         #Snack's own exception
         if isinstance(e, exception.SnackException):
             self.handle_snack_exception(e)
         #Other exception
         else:
-            self.write(e.message)
-            self.finish()
+            if settings.DEBUG:
+                super(BaseHandler, self)._handle_request_exception(e)
+            else:
+                self.prompt_and_redirect("Error : %s" % str(e))
     
     def handle_snack_exception(self, e):
         

@@ -97,9 +97,12 @@ class RedisSession(object):
         self.save()
 
     def save(self):
-        if self._dirty:
-            self._store.set_session(self._sid, self._data, 'data', self._expiry)
-            self._dirty = False
+        #Save data anyway.
+        self._store.set_session(self._sid, self._data, 'data', self._expiry)
+        
+        #if self._dirty:
+        #    self._store.set_session(self._sid, self._data, 'data', self._expiry)
+        #    self._dirty = False
 
 class Session(object):
     def __init__(self, get_secure_cookie, set_secure_cookie, name='_session', expires_days=None):

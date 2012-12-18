@@ -6,7 +6,7 @@
 		{% if len(instances) == 0 %}
 			<h3> You have no instances now</h3>
 		{% else %}
-			<table>
+			<table class="table">
 				<tr>
 					<td>Name</td>
 					<td>Status</td>
@@ -19,13 +19,13 @@
 					<td>{{instance['status']}}</td>
 					<td>{{instance['OS-EXT-STS:task_state']}}</td>
 					<td>
-						<a href="/instance/action?action=delete&instance_id={{instance['id']}}">Delete</a>
-						<a href="#">VNC console</a>
+						<a class="btn" href="/instance/action?action=delete&instance_id={{instance['id']}}">Delete</a>
+						<a class="btn" href="#">VNC console</a>
 					</td>
 				</tr>
 			{% end %}
 			</table>
 		{% end %}
-		<a href="/instance/create"><h2>Create Instance</h2></a>
+		<a class="btn btn-primary" href="/instance/create">Create New Instance</a>
 	</p>
 {% end %}

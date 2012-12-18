@@ -7,4 +7,5 @@ class Index(base.BaseHandler):
     
     @require_login
     def get(self):
+        print self.session['user']['client'].current_tenant
         self.render('common/index.html')

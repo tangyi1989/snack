@@ -20,6 +20,7 @@ class Application(web.Application):
         handlers = [(r"/", handler.common.Index),
                     (r"/auth", handler.user.Auth),
                     (r"/logout", handler.user.Logout),
+                    (r"/user/switch_to_tenant", handler.user.SwitchTenant),
                     (r"/instance/list", handler.instance.List),
                     (r"/instance/create", handler.instance.Create),
                     (r"/instance/action", handler.instance.Action),

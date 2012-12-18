@@ -17,8 +17,19 @@ class Auth(base.BaseHandler):
         self.session.save()
         self.redirect('/')
         
+class SwitchTenant(base.BaseHandler):
+    @require_login
+    def get(self):
+        tenant_name = self.get_argument('tenant_name', None)
+        if tenant_name == None:
+            raise exception.InvalidRequestArgument()
+        client = self.session['user']['client']
+        client.switch_to_tenant(tenant_name)
+        self.session['user']['client'] = client
+        self.session.save()
+        self.prompt_and_redirect(_('Switching tenant'), '/')
+        
 class Logout(base.BaseHandler):
-    @utils.debug
     def get(self):
         del self.session['user']
         self.session.save()

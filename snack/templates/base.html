@@ -1,29 +1,62 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>Snack-Esage Web</title>
+		<title>Snack-eSage Web {% block title %}{% end %}</title>
+		<link href="{{ static_url('css/bootstrap.css') }}" rel="stylesheet"/>
+		{% block header %}{% end %}
 	</head>
 	<body>
-		<div id="header">
-			{% block header %}{% end %}
-		</div>
-		<div id="status">
-			<h3>User</h3>{{ handler.session['user']['username'] }}
-			<h3>Current tenant</h3>{{ handler.session['user']['client'].current_tenant['name'] }}
-		</div>
-		<div id="menu">
-			<h2>Menu</h2>
-			<ul>
-				<li><a href="/instance/list">Instance list</a></li>
-				<li><a href="/logout">Logout</a></li>
-			</ul>
-		</div>
-		<div id="content">
-  			{% block content %}{% end %}
-		</div>
-		<div id="footer">
-			{% block footer %}{% end %}
-		</div>
+		<script type="text/x-handlebars" data-template-name="application">
+			<div class="navbar">
+				<div class="navbar-inner">
+					{% if handler.is_logged_in %}
+					<a class="brand" href="#">Snack Dashboard</a>
+					<ul class="nav pull-right">
+						<li><a href="#">User : {{ handler.session['user']['username'] }}</a></li>
+						<li>
+							<div class="btn-group">
+							Current tenant :
+							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+								Current tenant : {{ handler.session['user']['client'].current_tenant['name'] }} 
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								{% for tenant in handler.session['user']['client'].tenants %}
+									<li><a href="/user/switch_to_tenant?tenant_name={{ tenant['name'] }}">Switch to {{ tenant['name'] }}</a></li>
+								{% end %}
+							</ul>
+							</div>
+						</li>
+						<li><a href="/logout">Logout</a></li>
+					</ul>
+					{% else %}
+						<li><a href="/auth">Login</a></li>
+					{% end %}
+				</div>
+			</div>
+			<div class="container-fluid" style="padding: 10px 10px">
+			  <div class="row-fluid">
+				<div class="span2">
+				  <!--Sidebar content-->
+				  <div class="well" style="padding: 0 0 0 0;">
+					  <ul class="nav nav-list">
+						<li><a href="/instance/list">Instances</a></li>
+						<li><a href="#">Networks</a></li>
+						<li><a href="#">Security Groups</a></li>
+					  </ul>
+				  </div>
+				</div>
+				<div class="span10">
+				  {% block content %}{% end %}
+				</div>
+			  </div>
+			</div>
+		</script>
+		<script type="text/javascript" src="{{ static_url('js/jquery.min.js') }}"></script>
+		<script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
+		<script type="text/javascript" src="{{ static_url('js/handlebars.js') }}"></script>
+		<script type="text/javascript" src="{{ static_url('js/ember.js') }}"></script>
+		<script type="text/javascript" src="{{ static_url('js/app.js') }}"></script>
+		{% block footer %}{% end %}
 	</body>
 </html>
-

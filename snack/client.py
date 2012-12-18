@@ -53,16 +53,25 @@ class SnackClient():
         tenants = api.keystone.get_tenants(client)
         
         #Get tenants, always use the first tenant as current tenant
-        if len(tenants) > 0:
-            client.tenants = tenants
-            client.current_tenant = tenants[0]
-        
-        #Get service_catalog
-        service_catalog = api.keystone.get_service_catalog(client)
-        client.service_catalog = service_catalog
-        client.current_public_urls = get_public_urls(service_catalog)
+        #TODO : haven't process zero tenant here
+        client.tenants = tenants
+        if len(tenants) > 0:    
+            client.switch_to_tenant(tenants[0]['name'])
         
         return client
+    
+    def switch_to_tenant(self, tenant_name):
+        for tenant in self.tenants:
+            if tenant['name'] == tenant_name:
+                self.current_tenant = tenant
+                break
+            
+        if tenant_name != self.current_tenant['name']:
+            raise exception.WleeException(_("You have not the special tenant."))
+        
+        #Get service_catalog
+        self.service_catalog = api.keystone.get_service_catalog(self)
+        self.current_public_urls = get_public_urls(self.service_catalog)
     
     def get_image_list(self):
         image_list = api.glance.get_image_list(self)

@@ -1,13 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>Snack-Esage Web</title>
+		<title>Snack-eSage Web</title>
+		<link href="/static/css/bootstrap.css" rel="stylesheet"/>
 	</head>
 	<body>
-		<div id="content">
-			<h3>{{ prompt }}</h3>
-			<p>I will redirect to <a href="{{ redirect }}">{{ redirect }}</a></p>
-			<p>Please add javascript automatic redict if you see it.</p>
+		<div class="hero-unit" style="margin-top:100px; margin-left:100px; margin-right:100px;">
+		<h3>(( {{ prompt }} ))</h3>
+		<p>Redirecting to target url : <a href="{{ redirect }}">{{ redirect }}</a> in 3 seconds.</p>
 		</div>
+		<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				setTimeout(function(){ location.href = "{{ redirect }}" }, 3000);
+			});
+		</script>
 	</body>
 </html>

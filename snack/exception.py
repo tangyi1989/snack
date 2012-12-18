@@ -35,8 +35,6 @@ class APIRequestError(SnackException):
 class AjaxRequestError(SnackException):
     message = _("Ajax Request error : %(reason)s")
 
-
-
 def from_response(response, body):
     if body:
         message = "n/a"
