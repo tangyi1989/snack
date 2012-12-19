@@ -35,3 +35,14 @@ def delete_instance(client, instance_id):
     headers = {"X-Auth-Token" : client.token['id']}
     return HTTPClient().request(delete_instance_url, method="DELETE", 
                                 headers=headers)[1]
+
+def get_vnc_console(client, instance_id):
+    nova_url = client.current_public_urls['nova']
+    tenant_id = client.current_tenant['id']
+    console_url = "%s/servers/%s/action" % (nova_url, instance_id)
+    
+    body = {"os-getVNCConsole": { "type": "novnc"}}
+    
+    headers = {"X-Auth-Token" : client.token['id']}
+    return HTTPClient().request(console_url, method="POST", 
+                                headers=headers, body=body)[1]

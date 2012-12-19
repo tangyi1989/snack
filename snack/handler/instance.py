@@ -45,6 +45,8 @@ class Action(base.BaseHandler):
         
         if action == "delete":
             self.delete_instance(instance_id)
+        elif action == "get_vnc_console":
+            self.get_vnc_console(instance_id)
         #More actions add here!
         else:
             self.prompt_and_redirect(_("Unsupported instance action : %s") % action)
@@ -54,4 +56,10 @@ class Action(base.BaseHandler):
         result = client.delete_instance(instance_id)
         prompt = _("Deleting instance, please wait ...")
         self.prompt_and_redirect(prompt)
+    
+    def get_vnc_console(self, instance_id):
+        client = self.session['user']['client']
+        console_url = client.get_vnc_console_url(instance_id)
+        prompt = _("Getting VNC console ...")
+        self.prompt_and_redirect(prompt, console_url)
         

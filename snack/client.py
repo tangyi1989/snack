@@ -92,3 +92,7 @@ class SnackClient():
     def delete_instance(self, instance_id):
         result = api.nova.delete_instance(self, instance_id)
         return result
+    
+    def get_vnc_console_url(self, instance_id):
+        result = api.nova.get_vnc_console(self, instance_id)
+        return result['console']['url']

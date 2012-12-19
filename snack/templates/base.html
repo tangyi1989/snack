@@ -3,6 +3,7 @@
 	<head>
 		<title>Snack-eSage Web {% block title %}{% end %}</title>
 		<link href="{{ static_url('css/bootstrap.css') }}" rel="stylesheet"/>
+		<link href="{{ static_url('css/common.css')}}" rel="stylesheet"/>
 		{% block header %}{% end %}
 	</head>
 	<body>
@@ -34,22 +35,25 @@
 					{% end %}
 				</div>
 			</div>
-			<div class="container-fluid" style="padding: 10px 10px">
-			  <div class="row-fluid">
-				<div class="span2">
-				  <!--Sidebar content-->
-				  <div class="well" style="padding: 0 0 0 0;">
-					  <ul class="nav nav-list">
-						<li><a href="/instance/list">Instances</a></li>
-						<li><a href="#">Networks</a></li>
-						<li><a href="#">Security Groups</a></li>
-					  </ul>
-				  </div>
-				</div>
-				<div class="span10">
-				  {% block content %}{% end %}
-				</div>
-			  </div>
+			<!--Sidebar content-->
+			<div class="span3">
+				<ul class="nav nav-list bs-docs-sidenav affix">
+					<li>
+						<a href="/instance/list"><i class="icon-chevron-right"></i>Instances</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-chevron-right"></i>Networks</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-chevron-right"></i>Security Groups</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-chevron-right"></i>Monitors</a>
+					</li>
+				</ul>
+			</div>
+			<div class="span10" style="padding-left:20px; padding-right:20px;">
+				{% block content %}{% end %}
 			</div>
 		</script>
 		<script type="text/javascript" src="{{ static_url('js/jquery.min.js') }}"></script>
