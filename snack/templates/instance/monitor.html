@@ -1,0 +1,70 @@
+{% extends "../base.html" %}
+
+{% block content %}
+<h2>Monitor</h2>
+<div>
+	<div class="navbar-form pull-left well">
+		<input type="text" class="span3" id="instance_id" placeholder="Instance ID">
+		<button class="btn" type="button" data-loading-text="Loading..." id="query" >Query</button>
+		<br><br>
+		<span class="label label-info">Info</span>
+		<span><b>This is just a test page for openwlee, the developing monitor system. Don't mention it, I would delete it later.</b></span>
+	</div>
+	<div style="clear:both"></div>
+	<div class="container">
+		<div id="nic" style="width:500px; height:250px;"></div>
+		<div id="cpu" style="width:500px; height:250px;"></div>
+	</div>
+</div>
+{% end %}
+
+{% block footer %}
+<!--[if lt IE 9]>
+<script type="text/javascript" src="{{ static_url('js/flotr2/flashcanvas.js')}}"></script>
+<![endif]-->
+<script type="text/javascript" src="{{ static_url('js/flotr2/flotr2.min.js') }}"></script>
+<script type="text/javascript">
+function parse_UTC_timestamp(timestamp){
+	return (timestamp * 1000 + (new Date()).getTimezoneOffset() * 60000 );
+}
+
+function display_instance_performance(instance_id){
+	var request_url = "/~ajax/instance/get_performance?instance_id=" + instance_id;
+	$.get(request_url).success(function(data){
+		draw_performance(data, "nic_rx_bytes_rate", $("#nic")[0], "KB/s", 1.0/1024);
+		draw_performance(data, "cpu_used_percent", $("#cpu")[0], "%");
+		})
+	}
+	
+	function draw_performance(performance_list, type, container, unit,ratio){
+		if(!arguments[3]){ unit = ""; };
+		if(!arguments[4]){ ratio = 1.0; };
+		var values = [];
+		var options = {title : type + ' ' + unit, 
+					xaxis : { mode : 'time',  labelsAngle : 0 },
+					selection : {mode : "x"},
+					HtmlText : false
+					};
+		
+		for(var i=0; i<performance_list.length; i++){
+			var performance = performance_list[i];
+			var value = performance[type] * ratio;
+			values.push([parse_UTC_timestamp(performance['timestamp']), value]);
+		}
+			
+		function drawGraph(opts) {
+			o = Flotr._.extend(Flotr._.clone(options), opts || {});
+			return Flotr.draw(container, [values], o);
+		}
+			
+		drawGraph();
+}
+
+$(document).ready(function(){
+	$("#query").on('click', function(){
+		var instance_id = $("#instance_id").val();
+		display_instance_performance(instance_id);
+	});
+});
+</script>
+{% end %}

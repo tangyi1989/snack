@@ -7,37 +7,40 @@
 		{% block header %}{% end %}
 	</head>
 	<body>
-		<script type="text/x-handlebars" data-template-name="application">
-			<div class="navbar">
-				<div class="navbar-inner">
-					{% if handler.is_logged_in %}
-					<a class="brand" href="#">Snack Dashboard</a>
-					<ul class="nav pull-right">
-						<li><a href="#">User : {{ handler.session['user']['username'] }}</a></li>
-						<li>
-							<div class="btn-group">
-							Current tenant :
-							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-								Current tenant : {{ handler.session['user']['client'].current_tenant['name'] }} 
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu">
-								{% for tenant in handler.session['user']['client'].tenants %}
-									<li><a href="/user/switch_to_tenant?tenant_name={{ tenant['name'] }}">Switch to {{ tenant['name'] }}</a></li>
-								{% end %}
-							</ul>
-							</div>
-						</li>
-						<li><a href="/logout">Logout</a></li>
-					</ul>
-					{% else %}
-						<li><a href="/auth">Login</a></li>
-					{% end %}
-				</div>
-			</div>
+	<div class="navbar">
+		<div class="navbar-inner">
+			<a class="brand" href="#">Snack Dashboard</a>
+			{% if handler.is_logged_in %}
+			<ul class="nav pull-right">
+				<li><a href="#">User : {{ handler.session['user']['username'] }}</a></li>
+				<li>
+					<div class="btn-group">
+						Current tenant :
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							Current tenant : {{ handler.session['user']['client'].current_tenant['name'] }} 
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							{% for tenant in handler.session['user']['client'].tenants %}
+								<li><a href="/user/switch_to_tenant?tenant_name={{ tenant['name'] }}">Switch to {{ tenant['name'] }}</a></li>
+							{% end %}
+						</ul>
+					</div>
+				</li>
+				<li><a href="/logout">Logout</a></li>
+			</ul>
+			{% else %}
+			<ul class="nav pull-right">
+				<li><a href="/auth">Login</a></li>
+			</ul>
+			{% end %}
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
 			<!--Sidebar content-->
-			<div class="span3">
-				<ul class="nav nav-list bs-docs-sidenav affix">
+			<div class="span2">
+				<ul class="nav nav-list bs-docs-sidenav">
 					<li>
 						<a href="/instance/list"><i class="icon-chevron-right"></i>Instances</a>
 					</li>
@@ -48,19 +51,17 @@
 						<a href="#"><i class="icon-chevron-right"></i>Security Groups</a>
 					</li>
 					<li>
-						<a href="#"><i class="icon-chevron-right"></i>Monitors</a>
+						<a href="/monitor"><i class="icon-chevron-right"></i>Monitors</a>
 					</li>
 				</ul>
 			</div>
-			<div class="span10" style="padding-left:20px; padding-right:20px;">
+			<div class="span10">
 				{% block content %}{% end %}
 			</div>
-		</script>
+		<div>
+	</div>
 		<script type="text/javascript" src="{{ static_url('js/jquery.min.js') }}"></script>
 		<script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/handlebars.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/ember.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/app.js') }}"></script>
 		{% block footer %}{% end %}
 	</body>
 </html>

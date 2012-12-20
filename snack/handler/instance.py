@@ -22,7 +22,6 @@ class Create(base.BaseHandler):
                     flavors=flavors)
         
     @require_login
-    @utils.debug
     def post(self):
         name = self.get_argument("name", None)
         image_id = self.get_argument("image", None)

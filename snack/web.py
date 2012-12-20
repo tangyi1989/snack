@@ -24,6 +24,7 @@ class Application(web.Application):
                     (r"/instance/list", handler.instance.List),
                     (r"/instance/create", handler.instance.Create),
                     (r"/instance/action", handler.instance.Action),
+                    (r"/monitor", handler.monitor.Performance),
                     #Handle all ajax request
                     (r"/~ajax/(.*)", handler.ajax.AjaxHandler),]
         

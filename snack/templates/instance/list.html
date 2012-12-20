@@ -1,6 +1,7 @@
 {% extends "../base.html" %}
 
 {% block content %}
+{% from snack.translate import translate %}
 	<h2>Instance List</h2>
 	<p>
 		{% if len(instances) == 0 %}
@@ -15,6 +16,8 @@
 					<th>Status</th>
 					<th>Task State</th>
 					<th>Power State</th>
+					<th>Networks</th>
+					<th>Security Group</th>
 					<th>Actinons</th>
 				</tr>
 			{% for instance in instances %}
@@ -22,7 +25,15 @@
 					<td>{{instance['name']}}</td>
 					<td>{{instance['status']}}</td>
 					<td>{{instance['OS-EXT-STS:task_state']}}</td>
-					<td>{{instance['OS-EXT-STS:power_state']}}</td>
+					<td>{{translate(instance['OS-EXT-STS:power_state'], "power_state")}}</td>
+					<td>{{instance['addresses']}}</td>
+					<td>
+						<ul class="unstyled">
+						{% for security_group in instance["security_groups"]%}
+							<li><a href="#">{{security_group["name"]}}</a></li>
+						{% end %}
+						</ul>
+					</td>
 					<td>
 						<a class="btn" href="/instance/action?action=delete&instance_id={{instance['id']}}">Delete</a>
 						<a class="btn" target="_blank" href="/instance/action?action=get_vnc_console&instance_id={{instance['id']}}">VNC console</a>
