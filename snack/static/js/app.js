@@ -11,10 +11,10 @@ App.Router = Ember.Router.extend({
 	root: Ember.Route.extend({
 		index: Ember.Route.extend({
 			route: '/',
-			enter: function(router, context) {
+			enter: function(router) {
 				console.log('Entered root index.');
 			},
-			exit: function(router, context) {
+			exit: function(router) {
 				console.log('Exit root index.');
 			},
 		}),
